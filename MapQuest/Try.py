@@ -5,11 +5,6 @@ from tkinter import *
 #Create an instance of tkinter window or frame
 win=Tk()
 
-scrollbar = Scrollbar(win)
-scrollbar.pack( side = RIGHT, fill = Y )
-mylist = Listbox(win, yscrollcommand = scrollbar.set )
-
-
 orig,dest,gas = "","",""
 main_api = "https://www.mapquestapi.com/directions/v2/route?"
 key = "MhvbvH6lJAKgMu9wisKM5iSoZWOFFPQJ"    # You should use your own key 
@@ -26,7 +21,7 @@ def get_direction():
                 Label( win, text="Trip Duration: " + (json_data["route"]["formattedTime"])).pack()
                 Label( win, text="Kilometers: " + str("{:.2f}".format(json_data["route"]["distance"] * 1.6))).pack()
                 Label( win, text="Fuel Used (Ltr): " + str("{:.3f}".format(json_data["route"]["fuelUsed"]*3.78))).pack()
-                Label( win, text="Money to be Spent on Fuel: " + str("{:.3f}".format(json_data["route"]["fuelUsed"]*3.78 * gas))).pack()
+                Label( win, text="Money to be Spent on Fuel: " + str("{:.3f}".format(json_data["route"]["fuelUsed"]*3.78 *int(gas)))).pack()
                 scrollbar.pack(side=RIGHT, fill = Y)
                 myList = Listbox(win,  yscrollcommand=scrollbar.set, width=70)
                 for each in json_data["route"]["legs"][0]["maneuvers"]:
