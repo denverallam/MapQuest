@@ -14,13 +14,13 @@ key = "MhvbvH6lJAKgMu9wisKM5iSoZWOFFPQJ"
 def get_direction():
         url = main_api + urllib.parse.urlencode({"key":key, "from":orig, "to":dest})
         print ("URL ", (url))
-        Label( win, text="Destination City").pack()
         json_data = requests.get(url).json()
         json_status = json_data["info"]["statuscode"]
 
         # if successfull, display the result
         if json_status == 0:
                 navigate.destroy()
+                Label( win, text="Destination City").pack()
                 Label( win, text="Directions from " + (orig) + " to " + (dest)).pack()
                 Label( win, text="Trip Duration: " + (json_data["route"]["formattedTime"])).pack()
                 Label( win, text="Kilometers: " + str("{:.2f}".format(json_data["route"]["distance"] * 1.6))).pack()
