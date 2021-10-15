@@ -4,7 +4,7 @@ from tkinter import *
 
 #Create an instance of tkinter window or frame
 win=Tk()
-
+win.title("Map Quest")
 orig,dest,gas = "","",""
 main_api = "https://www.mapquestapi.com/directions/v2/route?"
 key = "MhvbvH6lJAKgMu9wisKM5iSoZWOFFPQJ"    # You should use your own key 
