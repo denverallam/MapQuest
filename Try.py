@@ -14,6 +14,11 @@ def get_input():
    dest = destination_txt.get(1.0, "end-1c")
    win.destroy()
 
+def display():
+    directions = Label(win, text=(orig, "to", dest))
+    print(directions)
+
+
 #Creating a text box widget for source
 source_lbl = Label( win, text="Source City")
 source_txt=Text(win, height=5, width=40)
@@ -41,7 +46,6 @@ win.mainloop()
 
 main_api = "https://www.mapquestapi.com/directions/v2/route?"
 key = "MhvbvH6lJAKgMu9wisKM5iSoZWOFFPQJ"    # You should use your own key 
-
     # orig = input ("Source City :")
     # if orig == "quit" or orig == "q":
     #     break
@@ -53,7 +57,7 @@ print ("URL ", (url))
 json_data = requests.get(url).json()
 json_status = json_data["info"]["statuscode"]
 if json_status == 0:
-        print ("API Status: " + str(json_status) + " = A successful route call.\n")
+        print("API Status: " + str(json_status) + " = A successful route call.\n")
         print("=============================================")
         print("Directions from " + (orig) + " to " + (dest))
         print("Trip Duration: " + (json_data["route"]["formattedTime"]))
