@@ -5,7 +5,12 @@ from tkinter import *
 #Create an instance of tkinter window or frame
 win=Tk()
 
-orig,dest = "",""
+scrollbar = Scrollbar(win)
+scrollbar.pack( side = RIGHT, fill = Y )
+mylist = Listbox(win, yscrollcommand = scrollbar.set )
+
+
+orig,dest,gas = "","",""
 main_api = "https://www.mapquestapi.com/directions/v2/route?"
 key = "MhvbvH6lJAKgMu9wisKM5iSoZWOFFPQJ"    # You should use your own key 
 
@@ -21,9 +26,10 @@ def get_direction():
                 Label( win, text="Trip Duration: " + (json_data["route"]["formattedTime"])).pack()
                 Label( win, text="Kilometers: " + str("{:.2f}".format(json_data["route"]["distance"] * 1.6))).pack()
                 Label( win, text="Fuel Used (Ltr): " + str("{:.3f}".format(json_data["route"]["fuelUsed"]*3.78))).pack()
+                Label( win, text="Money to be Spent on Fuel: " + str("{:.3f}".format(json_data["route"]["fuelUsed"]*3.78 * gas))).pack()
                 for each in json_data["route"]["legs"][0]["maneuvers"]:
                         narrative = StringVar()
-                        Label( win, textvariable=narrative).pack()
+                        mylist( win, textvariable=narrative).pack()
                         narrative.set(each["narrative"] + " (" + str("{:.2f}".format((each["distance"])*1.61) + " km)"))
 
         elif json_status == 402:
@@ -43,8 +49,10 @@ def get_direction():
 def get_input():
    global orig
    global dest
+   global gas
    orig = source_txt.get(1.0, "end-1c")
    dest = destination_txt.get(1.0, "end-1c")
+   gas = gas_txt.get(1.0, "end-1c")
    get_direction()
    Button(win, text="Okay", command=destroy).pack()
 
@@ -62,6 +70,13 @@ destination_lbl = Label( win, text="Destination City")
 destination_txt=Text(win, height=2, width=40)
 destination_lbl.pack()
 destination_txt.pack()
+
+#Creating a text box widget for destination
+
+gas_lbl = Label( win, text="Gas Price")
+gas_txt=Text(win, height=2, width=40)
+gas_lbl.pack()
+gas_txt.pack()
 #Create a button for Comment
 
 navigate= Button(win, height=1, width=10, text="Navigate", command=get_input)
@@ -71,7 +86,7 @@ navigate= Button(win, height=1, width=10, text="Navigate", command=get_input)
 navigate.pack()
 win.mainloop() 
 
-source_lbl = Label( root, text="Source City")
+source_lbl = Label(root, text="Source City")
 
 
 
