@@ -26,8 +26,7 @@ def get_direction():
                 Label( win, text="Trip Duration: " + (json_data["route"]["formattedTime"])).pack()
                 Label( win, text="Kilometers: " + str("{:.2f}".format(json_data["route"]["distance"] * 1.6))).pack()
                 Label( win, text="Fuel Used (Ltr): " + str("{:.3f}".format(json_data["route"]["fuelUsed"]*3.78))).pack()
-<<<<<<< HEAD
-
+                Label( win, text="Money to be Spent on Fuel: " + str("{:.3f}".format(json_data["route"]["fuelUsed"]*3.78 * gas))).pack()
                 scrollbar.pack(side=RIGHT, fill = Y)
                 myList = Listbox(win,  yscrollcommand=scrollbar.set, width=70)
                 for each in json_data["route"]["legs"][0]["maneuvers"]:
@@ -36,13 +35,6 @@ def get_direction():
                         myList.insert(END, narrative)
                 myList.pack(side=LEFT, fill=BOTH)
                 scrollbar.config(command=myList.yview)
-=======
-                Label( win, text="Money to be Spent on Fuel: " + str("{:.3f}".format(json_data["route"]["fuelUsed"]*3.78 * gas))).pack()
-                for each in json_data["route"]["legs"][0]["maneuvers"]:
-                        narrative = StringVar()
-                        mylist( win, textvariable=narrative).pack()
-                        narrative.set(each["narrative"] + " (" + str("{:.2f}".format((each["distance"])*1.61) + " km)"))
->>>>>>> d19a70841602af2fd926e1044f73b1f7576bb7c7
 
         elif json_status == 402:
                 print("**********************************************")
@@ -98,10 +90,7 @@ navigate= Button(win, height=1, width=10, text="Navigate", command=get_input)
 navigate.pack()
 win.mainloop() 
 
-<<<<<<< HEAD
-=======
-source_lbl = Label(root, text="Source City")
->>>>>>> d19a70841602af2fd926e1044f73b1f7576bb7c7
+
 
 
 
