@@ -21,10 +21,15 @@ def get_direction():
                 Label( win, text="Trip Duration: " + (json_data["route"]["formattedTime"])).pack()
                 Label( win, text="Kilometers: " + str("{:.2f}".format(json_data["route"]["distance"] * 1.6))).pack()
                 Label( win, text="Fuel Used (Ltr): " + str("{:.3f}".format(json_data["route"]["fuelUsed"]*3.78))).pack()
+
+                scrollbar.pack(side=RIGHT, fill = Y)
+                myList = Listbox(win,  yscrollcommand=scrollbar.set, width=70)
                 for each in json_data["route"]["legs"][0]["maneuvers"]:
-                        narrative = StringVar()
-                        Label( win, textvariable=narrative).pack()
-                        narrative.set(each["narrative"] + " (" + str("{:.2f}".format((each["distance"])*1.61) + " km)"))
+                        # Label( win, textvariable=narrative).pack()
+                        narrative = each["narrative"] + " (" + str("{:.2f}".format((each["distance"])*1.61) + " km)")
+                        myList.insert(END, narrative)
+                myList.pack(side=LEFT, fill=BOTH)
+                scrollbar.config(command=myList.yview)
 
         elif json_status == 402:
                 print("**********************************************")
@@ -46,7 +51,7 @@ def get_input():
    orig = source_txt.get(1.0, "end-1c")
    dest = destination_txt.get(1.0, "end-1c")
    get_direction()
-   Button(win, text="Okay", command=destroy).pack()
+   Button(win, height=1, width=10, text="Close ", command=destroy)
 
 def destroy():
         win.destroy()
@@ -56,7 +61,7 @@ source_txt=Text(win, height=2, width=40)
 source_lbl.pack()
 source_txt.pack()
 
-#Creating a text box widget for destination
+scrollbar = Scrollbar(win)
 
 destination_lbl = Label( win, text="Destination City")
 destination_txt=Text(win, height=2, width=40)
@@ -71,7 +76,6 @@ navigate= Button(win, height=1, width=10, text="Navigate", command=get_input)
 navigate.pack()
 win.mainloop() 
 
-source_lbl = Label( root, text="Source City")
 
 
 
